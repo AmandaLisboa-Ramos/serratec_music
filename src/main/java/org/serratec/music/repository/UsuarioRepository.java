@@ -1,5 +1,8 @@
 package org.serratec.music.repository;
 
-public class UsuarioRepository {
+import org.serratec.music.domain.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
 }
