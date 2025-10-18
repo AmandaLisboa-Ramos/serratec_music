@@ -3,8 +3,8 @@ package org.serratec.music.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.serratec.music.domain.Musica;
-import org.serratec.music.repository.MusicaRepository;
+import org.serratec.music.domain.Usuario;
+import org.serratec.music.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,47 +21,51 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/musicas")
+@RequestMapping("/usuario")
 @Validated
-public class MusicaController {
-	
+// esse @Validated diz que essa classe aceita validações dentro dos métodos.
+
+public class UsuarioController {
+
 	@Autowired
-	private MusicaRepository musicaRepository;
-	
+	private UsuarioRepository usuarioRepository;
+
 	@GetMapping
-	public ResponseEntity<List<Musica>> listar(){
-		return ResponseEntity.ok(musicaRepository.findAll());
+	public ResponseEntity<List<Usuario>> listar() {
+		return ResponseEntity.ok(usuarioRepository.findAll());
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Musica> buscarId(@PathVariable Long id){
-		Optional<Musica> musica = musicaRepository.findById(id);
-		if (musica.isPresent()) {
-			return ResponseEntity.ok(musica.get());
+	public ResponseEntity<Usuario> buscarId(@PathVariable Long id) {
+		Optional<Usuario> usuario = usuarioRepository.findById(id);
+		if (usuario.isPresent()) {
+			return ResponseEntity.ok(usuario.get());
 		}
-		return ResponseEntity.notFound().build(); 
+		return ResponseEntity.notFound().build();
 	}
+
 	@PostMapping
-	public ResponseEntity<Musica> criar(@Valid @RequestBody Musica musica){
-		Musica salvo = musicaRepository.save(musica);
+	public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario) {
+		Usuario salvo = usuarioRepository.save(usuario);
 		return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
 	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Musica> atualizar(@PathVariable Long id, @Valid @RequestBody Musica musica){
-		if(!musicaRepository.existsById(id)) {
+	public ResponseEntity<Usuario> atualizar(@Valid @PathVariable Long id, @RequestBody Usuario usuario) {
+		if (!usuarioRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		musica.setId(id);
-		Musica atualizada = musicaRepository.save(musica);
-		return ResponseEntity.ok(atualizada);
+		usuario.setId(id);
+		Usuario atualizado = usuarioRepository.save(usuario);
+		return ResponseEntity.ok(atualizado);
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletar(@PathVariable Long id){
-		if(!musicaRepository.existsById(id)) {
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
+		if (!usuarioRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		musicaRepository.deleteById(id);
+		usuarioRepository.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 }
