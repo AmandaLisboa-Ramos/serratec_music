@@ -2,6 +2,8 @@ package org.serratec.music.domain;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -21,14 +25,17 @@ public class Perfil {
 	private Long id;
 
 	@Column(name = "telefone")
-	@NotBlank(message = "O campo telefone não pode estar em branco")
-	@Size(max = 14, message = "o campo telefone não pode ser mais que 14 caracteres")
+	@NotBlank(message = "O campo telefone não pode estar em branco.")
+	@Size(max = 14, message = "o campo telefone não pode ser mais que 14 caracteres.")
 	private String telefone;
 
 	@Column(name = "data_nascimento")
+	@NotNull(message = "O campo data de nascimento não pode estar em branco.")
+	@Past(message = "A data de nascimento não pode ser futura.")
 	private LocalDate dataNascimento;
 
 	@OneToOne(mappedBy = "perfil")
+	@JsonIgnore
 	private Usuario usuario;
 
 	public Perfil(Long id, String telefone, LocalDate dataNascimento, Usuario usuario) {

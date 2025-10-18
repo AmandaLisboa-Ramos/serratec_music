@@ -2,6 +2,8 @@ package org.serratec.music.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,7 @@ public class Artista {
 	private String nacionalidade;
 
 	@ManyToMany(mappedBy = "artistas")
+	@JsonIgnore
 	private List<Musica> musicas;
 
 	public Artista(Long id, String nome, String nacionalidade, List<Musica> musicas) {
