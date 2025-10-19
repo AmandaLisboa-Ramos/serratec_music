@@ -1,5 +1,5 @@
 
-<img width="1024" height="1024" alt="logoSerratecMusic" src="https://github.com/user-attachments/assets/3fd55139-e018-4d09-8d37-ef550562ba4f" />
+<img width="400" height="400" alt="logoSerratecMusic" src="https://github.com/user-attachments/assets/3fd55139-e018-4d09-8d37-ef550562ba4f" />
 
 # 🎵 Serratec Music API  
 
