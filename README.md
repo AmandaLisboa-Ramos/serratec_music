@@ -1,7 +1,9 @@
 
+<img width="1024" height="1024" alt="logoSerratecMusic" src="https://github.com/user-attachments/assets/3fd55139-e018-4d09-8d37-ef550562ba4f" />
+
 # 🎵 Serratec Music API  
 
-**Desenvolvido por [Amanda Lisboa](https://www.linkedin.com/in/amanda-lisboa)**  
+**Desenvolvido por [Amanda Lisboa](https://www.linkedin.com/in/amanda-lisboa-789a42330/)**  
 
 API RESTful desenvolvida em **Java com Spring Boot** e **PostgreSQL**, responsável por gerenciar **usuários, artistas, músicas e playlists**.  
 O projeto foi desenvolvido individualmente como parte da disciplina **API**, no programa **Serratec - Residência em TIC**.  
