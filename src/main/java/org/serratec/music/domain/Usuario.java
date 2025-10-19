@@ -1,6 +1,8 @@
 package org.serratec.music.domain;
 
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,6 +20,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Usuario")
+@Schema(description = "Entidade que representa um usuário do sistema Serratec Music.")
 public class Usuario {
 
 	@Id
@@ -27,12 +30,14 @@ public class Usuario {
 	@Column(name = "nome")
 	@NotBlank(message = "O campo Nome não pode estar em branco")
 	@Size(max = 100, message = "O campo nome deve ter no máximo 100 caracteres")
+    @Schema(description = "Identificador único do usuário", example = "1")
 	private String nome;
 
 	@Column(name = "email",unique = true)
 	@Email(message = "O seu Email é inválido")
 	@NotBlank(message = "O campo Email não pode estar em branco")
 	@Size(max = 80, message = "O campo Email não pode ter mais de 80 caracteres")
+    @Schema(description = "E-mail do usuário (deve ser único)", example = "teste@example.com")
 	private String email;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -41,7 +46,9 @@ public class Usuario {
 	private Perfil perfil;
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@Schema(description = "Perfil associado ao usuário (telefone e data de nascimento).")
 	private List<Playlist> playlists;
+	
 
 	public Usuario(Long id, String nome, String email) {
 		super();

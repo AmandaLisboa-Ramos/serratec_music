@@ -18,21 +18,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/playlists")
 @Validated
+@Tag(name = "Playlists", description = "Endpoints para gerenciamento de playlists e associação com músicas e usuários")
+
 public class PlaylistController {
 
 	@Autowired
 	private PlaylistRepository playlistRepository;
 
+	@Operation(summary = "Listar todas as playlists", description = "Retorna todas as playlists criadas/cadastradas pelos usuários.")
 	@GetMapping
 	public ResponseEntity<List<Playlist>> listar() {
 		return ResponseEntity.ok(playlistRepository.findAll());
 	}
 
+	@Operation(summary = "Buscar playlist por ID", description = "Retorna os detalhes de uma playlist específica com suas músicas e usuário a partir do ID informado.")
 	@GetMapping("/{id}")
 	public ResponseEntity<Playlist> buscarPorId(@PathVariable Long id) {
 		Optional<Playlist> playlist = playlistRepository.findById(id);
@@ -42,12 +48,14 @@ public class PlaylistController {
 		return ResponseEntity.notFound().build();
 	}
 
+	@Operation(summary = "Criar nova playlist", description = "Cria uma nova playlist que estará ligada a um usuário e contendo músicas existentes.")
 	@PostMapping
 	public ResponseEntity<Playlist> criar(@Valid @RequestBody Playlist playlist) {
 		Playlist salva = playlistRepository.save(playlist);
 		return ResponseEntity.status(HttpStatus.CREATED).body(salva);
 	}
 
+	@Operation(summary = "Atualizar playlist existente", description = "Atualiza o nome, descrição ou lista de músicas de uma playlist existente.")
 	@PutMapping("/{id}")
 	public ResponseEntity<Playlist> atualizar(@PathVariable Long id, @Valid @RequestBody Playlist playlist) {
 		if (!playlistRepository.existsById(id)) {
@@ -58,6 +66,7 @@ public class PlaylistController {
 		return ResponseEntity.ok(atualizada);
 	}
 
+	@Operation(summary = "Excluir playlist", description = "Deleta uma playlist do sistema com base no ID informado.")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		if (!playlistRepository.existsById(id)) {

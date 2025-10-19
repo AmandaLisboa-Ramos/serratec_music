@@ -18,23 +18,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuario")
 @Validated
-// esse @Validated diz que essa classe aceita validações dentro dos métodos.
-
+@Tag(name = "Usuários", description = "Endpoints para gerenciamento de usuários e seus perfis")
 public class UsuarioController {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
+	@Operation(summary = "Listar todos os usuários", description = "Retorna uma lista com todos os usuários cadastrados no sistema.")
 	@GetMapping
 	public ResponseEntity<List<Usuario>> listar() {
 		return ResponseEntity.ok(usuarioRepository.findAll());
 	}
 
+	@Operation(summary = "Buscar usuário por ID", description = "Retorna um usuário específico a partir do ID informado.")
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> buscarId(@PathVariable Long id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
@@ -44,12 +47,14 @@ public class UsuarioController {
 		return ResponseEntity.notFound().build();
 	}
 
+	@Operation(summary = "Cadastrar novo usuário", description = "Cria um novo usuário e o seu perfil em uma única requisição.")
 	@PostMapping
 	public ResponseEntity<Usuario> criar(@Valid @RequestBody Usuario usuario) {
 		Usuario salvo = usuarioRepository.save(usuario);
 		return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
 	}
 
+	@Operation(summary = "Atualizar usuário existente", description = "Atualiza os dados de um usuário a partir do ID informado.")
 	@PutMapping("/{id}")
 	public ResponseEntity<Usuario> atualizar(@Valid @PathVariable Long id, @RequestBody Usuario usuario) {
 		if (!usuarioRepository.existsById(id)) {
@@ -60,6 +65,7 @@ public class UsuarioController {
 		return ResponseEntity.ok(atualizado);
 	}
 
+	@Operation(summary = "Excluir usuário", description = "Deleta um usuário do sistema a partir do ID informado.")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		if (!usuarioRepository.existsById(id)) {

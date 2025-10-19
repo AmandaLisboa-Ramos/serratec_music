@@ -2,6 +2,7 @@ package org.serratec.music.domain;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,28 +18,34 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Playlist")
+@Schema(description = "Entidade que representa uma playlist criada por um usuário.")
 public class Playlist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Schema(description = "Identificador único da playlist", example = "1")
 	private Long id;
 
 	@Column(name = "nome")
 	@NotBlank(message = "O campo Nome não pode estar em branco")
 	@Size(max = 80, message = "O campo Nome não pode ter mais de 80 caracteres")
+	@Schema(description = "Nome da playlist", example = "Hits MPB Romântico")
 	private String nome;
 
 	@Column(name = "descricao")
 	@NotBlank(message = "O campo Descriçao não pode estar em branco")
 	@Size(max = 200, message = "o campo Descrição não pode ter mais de 200 caracteres.")
+	@Schema(description = "Descrição opcional da playlist", example = "Músicas para quando o coração tá apaixonado.")
 	private String descricao;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
+	@Schema(description = "Usuário dono da playlist.")
 	private Usuario usuario;
 
 	@ManyToMany
 	@JoinTable(name = "playlist_musica", joinColumns = @JoinColumn(name = "playlist_id"), inverseJoinColumns = @JoinColumn(name = "musica_id"))
+	@Schema(description = "Lista de músicas que compõem a playlist.")
 	private List<Musica> musicas;
 
 	public Playlist(Long id, String nome, String descricao, List<Musica> musicas) {
