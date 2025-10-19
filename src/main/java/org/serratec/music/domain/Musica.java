@@ -2,6 +2,7 @@ package org.serratec.music.domain;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -20,25 +21,30 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Musica")
+@Schema(description = "Entidade que representa uma música cadastrada na plataforma.")
 public class Musica {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador único da música", example = "1")
 	private Long id;
 
 	@Column(name = "titulo")
 	@NotBlank(message = "O campo Titulo não pode estar em branco")
 	@Size(max = 100, message = "O campo Titulo não pode estar em branco")
+    @Schema(description = "Título da música", example = "Amor pra Recomeçar")
 	private String titulo;
 
 	@Column(name = "minutos")
 	@NotNull(message = "O campo Minutos não pode estar em branco")
 	@Max(value = 4, message = "O campo Minutos não pode ter mais de 4 números")
+    @Schema(description = "Duração da música em minutos", example = "4")
 	private Integer minutos;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	@NotNull(message = "o Campo genero não estar em branco")
+    @Schema(description = "Gênero musical da faixa", example = "MPB")
 	private GeneroMusical genero;
 	
 	@ManyToMany
